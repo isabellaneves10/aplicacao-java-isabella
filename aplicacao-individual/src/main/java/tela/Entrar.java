@@ -15,48 +15,96 @@ import model.SelectModel;
  * @author BELLA
  */
 public class Entrar {
-    
+
     public static void main(String[] args) {
 
         Controller controller = new Controller();
 
         Scanner leitor = new Scanner(System.in);
 
-        System.out.println("Digite o nome de Usuario");
-        String usuario = leitor.nextLine();
+        System.out.println(" \n"
+                + "********Olá********\n\n"
+                + "       / ..|\\\n"
+                + "      (_\\  |_)\n"
+                + "      /  \\@'\n"
+                + "     /     \\\n"
+                + " _  /  `   |\n"
+                + "\\\\/  \\  | _\\\n"
+                + " \\   /_ || \\\\_\n"
+                + "  \\____)|_) \\_)");
 
-        System.out.println("Digite a senha do Usuario");
-        String senha = leitor.nextLine();
+        List<SelectModel> listaUsuario;
+        List<SelectModel> listaUsuarioNuvem;
+        List<Login> listaLeituraUsuario;
+        List<Login> listaLeituraUsuarioNuvem;
 
-        /*-------------------------------------------------------------------------*/
-        //invocando o método selectDadosUsuario             
-        List<SelectModel> listaUsuario = controller.selectDadosUsuarioLocal(usuario, senha);
-        System.out.println(listaUsuario);
+        String email;
+        
+        do {
+            System.out.println("\n\nDigite o seu email de usuário");
+            email = leitor.nextLine();
 
-        //invocando o método selectDadosUsuario             
-        List<SelectModel> listaUsuarioNuvem = controller.selectDadosUsuarioNuvem(usuario, senha);
-        System.out.println(listaUsuarioNuvem);
+            
+            System.out.println(" ______________\n"
+                    + "||            ||\n"
+                    + "||            ||\n"
+                    + "||Verificando ||\n"
+                    + "||            ||\n"
+                    + "||____________||\n"
+                    + "|______________|\n"
+                    + " \\\\############\\\\\n"
+                    + "  \\\\############\\\\\n"
+                    + "   \\      ____    \\   \n"
+                    + "    \\_____\\___\\____\\");
 
-        /*-------------------------------------------------------------------------*/
-        //invocando o método selectLeituraUsuario
-        List<Login> listaLeituraUsuario = controller.selectLeituraUsuario(usuario, senha);
-        System.out.println(listaLeituraUsuario);
+            /*-------------------------------------------------------------------------*/
+            //invocando o método selectDadosUsuario             
+            listaUsuario = controller.selectDadosUsuarioLocal(email);
+            System.out.println(listaUsuario);
 
-        //invocando o método selectLeituraUsuarioNuvem
-        List<Login> listaLeituraUsuarioNuvem = controller.selectLeituraUsuarioNuvem(usuario, senha);
-        System.out.println(listaLeituraUsuarioNuvem);
+            //invocando o método selectDadosUsuario             
+            listaUsuarioNuvem = controller.selectDadosUsuarioNuvem(email);
+            System.out.println(listaUsuarioNuvem);
 
-        /*-----------------------------------------------------------------------------*/
-        if (listaUsuario.isEmpty() || listaUsuarioNuvem.isEmpty()) {
+            /*-------------------------------------------------------------------------*/
+            //invocando o método selectLeituraUsuario
+            listaLeituraUsuario = controller.selectLeituraUsuario(email);
+            System.out.println(listaLeituraUsuario);
 
-            System.out.println("Usuário não encontrado");
-        } else {
+            //invocando o método selectLeituraUsuarioNuvem
+            listaLeituraUsuarioNuvem = controller.selectLeituraUsuarioNuvem(email);
+            System.out.println(listaLeituraUsuarioNuvem);
 
-            System.out.println("Bem-vindo de volta " + usuario);
+            /*-----------------------------------------------------------------------------*/
+            if (listaUsuario.isEmpty() || listaUsuarioNuvem.isEmpty()) {
+
+                System.out.println("\nUsuário não encontrado");
+
+            }
+        } while (listaUsuario.isEmpty() || listaUsuarioNuvem.isEmpty());
+
+        if (!listaUsuario.isEmpty() && !listaUsuarioNuvem.isEmpty()) {
+
+            System.out.println("\nBem-vindo de volta " + 
+                    listaUsuario.get(0).getNomeUsuario() + " !");
+
+            System.out.println("              ____\n"
+                    + "            /____ `\\\n"
+                    + "           ||_  _`\\ \\\n"
+                    + "     .-.   `|O, O  ||\n"
+                    + "     | |    (/    -)\\\n"
+                    + "     | |    |`-'` |\\`\n"
+                    + "  __/  |    | _/  |\n"
+                    + " (___) \\.  _.\\__. `\\___\n"
+                    + " (___)  )\\/  \\    _/  ~\\.\n"
+                    + " (___) . \\   `--  _   `\\\n"
+                    + "  (__)-    ,/        (   |\n"
+                    + "       `--~|         |   |\n"
+                    + "           |         |   | ");
 
             controller.inserirNoBanco(listaLeituraUsuario.get(0).getFkConfig(), listaLeituraUsuario.get(0).getFkComponente());
         }
 
     }
-    
+
 }

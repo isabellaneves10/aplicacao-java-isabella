@@ -47,50 +47,50 @@ public class Controller {
     List<RedeInterface> listaRedes = new ArrayList(looca.getRede().getGrupoDeInterfaces().getInterfaces());
 
     //Select de dados do usuário - Login Local
-    public List<SelectModel> selectDadosUsuarioLocal(String usuario, String senha) {
+    public List<SelectModel> selectDadosUsuarioLocal(String email) {
 
         List<SelectModel> listaUsuario = new ArrayList();
 
-        listaUsuario = conLocal.query("SELECT * FROM tbUsuario WHERE nomeUsuario = ? AND senhaUsuario = ?",
-                new BeanPropertyRowMapper(SelectModel.class), usuario, senha);
+        listaUsuario = conLocal.query("SELECT * FROM tbUsuario WHERE emailUsuario = ?",
+                new BeanPropertyRowMapper(SelectModel.class), email);
 
         return listaUsuario;
     }
 
     //Select de dados do usuário - Login Nuvem
-    public List<SelectModel> selectDadosUsuarioNuvem(String usuario, String senha) {
+    public List<SelectModel> selectDadosUsuarioNuvem(String email) {
 
         List<SelectModel> listaUsuarioNuvem = new ArrayList();
 
-        listaUsuarioNuvem = conNuvem.query("SELECT * FROM tbUsuario WHERE nomeUsuario = ? AND senhaUsuario = ?",
-                new BeanPropertyRowMapper(SelectModel.class), usuario, senha);
+        listaUsuarioNuvem = conNuvem.query("SELECT * FROM tbUsuario WHERE emailUsuario = ?",
+                new BeanPropertyRowMapper(SelectModel.class), email);
 
         return listaUsuarioNuvem;
     }
 
     /*-----------------------------------------------------------------------------------*/
     //Leituras do usuário - local
-    public List<Login> selectLeituraUsuario(String usuario, String senha) {
+    public List<Login> selectLeituraUsuario(String email) {
 
         List<Login> listaLeituraUsuario = new ArrayList();
 
         listaLeituraUsuario = conLocal.query("select idLeitura , fkConfig, fkAlertaComponente , c.fkMaquina, fkComponente , nSerie ,  nomeUsuario from tbLeitura as l"
                 + " join tbConfig as c on l.fkConfig = c.idConfig join tbMaquina as m on m.idMaquina = c.fkMaquina "
-                + "join tbUsuario as u on u.fkMaquina = m.idMaquina where nomeUsuario = ? and senhaUsuario = ? order by idLeitura desc limit 1 ;",
-                new BeanPropertyRowMapper(Login.class), usuario, senha);
+                + "join tbUsuario as u on u.fkMaquina = m.idMaquina where emailUsuario = ? order by idLeitura desc limit 1 ;",
+                new BeanPropertyRowMapper(Login.class), email);
 
         return listaLeituraUsuario;
     }
 
     //Leituras do usuário - nuvem
-    public List<Login> selectLeituraUsuarioNuvem(String usuario, String senha) {
+    public List<Login> selectLeituraUsuarioNuvem(String email) {
 
         List<Login> listaLeituraUsuarioNuvem = new ArrayList();
 
         listaLeituraUsuarioNuvem = conNuvem.query(
                 "select top 1 idLeitura, fkConfig, fkAlertaComponente ,c.fkMaquina, fkComponente ,nSerie , nomeUsuario"
-                + " from tbLeitura as l join tbConfig as c on l.fkConfig = c.idConfig join tbMaquina as m on m.idMaquina = c.fkMaquina join tbUsuario as u on u.fkMaquina = m.idMaquina where nomeUsuario = ? and senhaUsuario = ? order by idLeitura desc ;",
-                new BeanPropertyRowMapper(Login.class), usuario, senha);
+                + " from tbLeitura as l join tbConfig as c on l.fkConfig = c.idConfig join tbMaquina as m on m.idMaquina = c.fkMaquina join tbUsuario as u on u.fkMaquina = m.idMaquina where emailUsuario = ? order by idLeitura desc ;",
+                new BeanPropertyRowMapper(Login.class), email);
 
         return listaLeituraUsuarioNuvem;
     }
